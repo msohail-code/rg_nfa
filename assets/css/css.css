@@ -44,6 +44,10 @@ form input[type=text] {
 .single_image img {
     width: 220px;
     height: 160px;
+    border: 2px solid #a7a7a7;
+}
+img.Leader {
+    border: 6px double #a7a7a7;
 }
 .single_image {
     display: inline-block;
