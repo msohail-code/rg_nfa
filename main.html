@@ -18,11 +18,36 @@
         <button onclick="showPanel(2,'#fff')">NFA <span class="arrow">&#8594;</span>  RG</button>
         <button onclick="showPanel(3,'#fff')">Help + Doc</button>
     </div>
-    <div class="tabPanel">Home</div>
+    <div class="tabPanel">
+        <center>
+            <h3>TIC 2151 Theory of Computation</h3><br><br>
+            <h3>Group Members, Name, Photo and ID</h3><br>
+            <div class="team_images">
+                <div class="single_image">
+                    <img src="assets/images/team-1.jpg" alt=""><br>
+                    <label for="">Leader</label><br>
+                </div>
+                <div class="single_image">
+                    <img src="assets/images/team-1.jpg" alt=""><br>
+                    <label for=""></label><br>
+                </div>
+                <div class="single_image">
+                    <img src="assets/images/team-1.jpg" alt=""><br>
+                    <label for=""></label><br>
+                </div>
+                <div class="single_image">
+                    <img src="assets/images/team-1.jpg" alt=""><br>
+                    <label for=""></label><br>
+                </div>
+                <div class="clear"></div>
+            </div><br><br>
+            <h3>Other info such as members participation</h3>
+        </center>
+    </div>
     <div class="tabPanel">
         <form action="" id="rg_nfa" method="post">
             <label for="rg_input">Regular Grammer (Input)</label><br>
-            <textarea name="rg_input" id="rg_input" cols="30" rows="10"></textarea><br>
+            <textarea name="rg_input" id="rg_input" class="rg_input" cols="30" rows="10"></textarea><br>
             <span id="error"></span><br>
             <button id="find_nfa" class="button">Convert RG into NFA</button>
         </form>
@@ -127,54 +152,22 @@
             <button id="draw_nfa" class="button">Draw NFA</button>
         </div>
     </div>
-    <div class="tabPanel">NFA -> RG</div>
+    <div class="tabPanel">
+        <form id="nfa_rg" method="post">
+            <label for="input_state">Enter States</label><br>
+            <input type="text" name="input_state" id="input_state" class="input_state nfa_value" required /><br>
+            <label for="input_remaining">Rest Table</label><br>
+            <textarea name="nfa_rest"  id="nfa_rest" class="rg_input nfa_value" cols="30" rows="10" required></textarea><br>
+            <label for='' style="color: red; font-weight: 200;">Use comma to seperate</label><br>
+            <input type="submit" id="find_rg" class="button" value="NFA to RG">
+        </form>
+        <label for='' style="color: black; font-weight: 200;">Use ~ for epsilon. # for ∅</label><br>
+        <div id="nfa_rg_output"></div>
+    </div>
     <div class="tabPanel">Help Docs</div>
 </div>
 <script type="text/javascript" src="assets/js/tabs.js"></script>
-<script type="text/javascript">
-    //document.getElementById('rg_input').value = localStorage.getItem('rg');
-    document.getElementById('rg_nfa').addEventListener('submit', function(e) {
-       
-        e.preventDefault(); 
-        let ajax_result = document.getElementById('ajax_output');
-        var rg_data = "rg_data="+document.getElementById('rg_input').value;
-        
-        var get_nfa = new XMLHttpRequest();
-        get_nfa.onreadystatechange = function(){
-            if(this.readyState == 4 && this.status == 200){
-                
-                ajax_result.innerHTML = this.responseText;
-                document.getElementById('nfa_diagram').style.display = 'block';
-            }
-        };
-        get_nfa.open('post','process.php',true);
-        get_nfa.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        get_nfa.send(rg_data);
-    })
-
-    
-
-   function without_epsilon() {
-      
-        //e.preventDefault(); 
-        let ajax_result = document.getElementById('without_epsilon');
-        var rg_data = "no_epsilon="+document.getElementById('rg_input').value;
-        
-        var get_nfa = new XMLHttpRequest();
-        get_nfa.onreadystatechange = function(){
-            if(this.readyState == 4 && this.status == 200){
-                
-                ajax_result.innerHTML = this.responseText;
-                document.getElementById('nfa_diagram').style.display = 'block';
-            }
-        };
-        get_nfa.open('post','process.php',true);
-        get_nfa.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        get_nfa.send(rg_data);
-    }
-
-
-</script>
+<script type="text/javascript" src="assets/js/request.js"></script>
 
 </body>
 </html>

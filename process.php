@@ -184,7 +184,10 @@ if (isset($_POST['rg_data'])) {
 	}
 	echo "</table></div>";
 	echo "<div class='table_nfa_epsilon'><button id='without_epsilon_btn' onclick='without_epsilon()' style='margin-top: 100px;' class='button'>To without &epsilon;</button></div><div class='table_nfa_epsilon' id='without_epsilon'></div>";
+	echo '<div class="clear"></div>';
 }
+
+
 
 //Without epsilon
 if (isset($_POST['no_epsilon'])) {
@@ -227,11 +230,7 @@ if (isset($_POST['no_epsilon'])) {
 				} elseif(ctype_upper($char)){
 					$up_char[] = $char;
 					//$low_char = '';
-				} elseif(!ctype_alpha($char) ){
-
-					$variables_small[] = '~';
-					$low_char[] = '~';
-				}
+				} 
 
 
 
@@ -275,12 +274,14 @@ if (isset($_POST['no_epsilon'])) {
 					$all_rows[$i] .= "<td> $point_cell[$i]</td>";
 				}
 
+				$new_ex = explode("|", $expresion[$i]);
+
 				for ($j=0; $j < count($all_headings); $j++) { 
 					//$expresion[$i] = str_replace('~', 'ε', $expresion[$i]);
 					
 						if (strstr($expresion[$i], $all_headings[$j])) {
 							
-							$new_ex = explode("|", $expresion[$i]);
+							//$new_ex = explode("|", $expresion[$i]);
 							//$new_ex = array_combine(range(0, count($new_ex) + (-1)), array_values($new_ex)); 
 							for ($x=0; $x < count($new_ex); $x++) { 
 								//echo "<br>";
@@ -291,7 +292,7 @@ if (isset($_POST['no_epsilon'])) {
 									echo $all_headings[$j];
 									print_r($simple_ex );
 								}*/
-								
+								//print_r($simple_ex);
 
 								for ($y=0; $y < count($simple_ex); $y++) { 
 									if (ctype_upper($simple_ex[$y])) {
@@ -303,8 +304,21 @@ if (isset($_POST['no_epsilon'])) {
 									}*/
 								}
 							}
-						} else{
-							$new_char[$i][$j] = '';
+						}/*elseif (strstr($expresion[$i], '~')) {
+							$simple_ex = str_split($expresion[$i]);
+								echo "<br>";
+								print_r($simple_ex);
+
+								for ($k=0; $k < count($simple_ex); $k++) { 
+									if (ctype_upper($simple_ex[$k])) {
+										$new_char[$i][$y] = ','.$simple_ex[$k];
+									}
+								}
+								break;
+							//$new_char[$i][$j] = ','.;
+						}*/ else{
+							//echo $expresion[$i];
+							$new_char[$i][] = '';
 						}
 					
 					/*echo "$expresion[$i], $all_headings[$j]";
@@ -326,7 +340,7 @@ if (isset($_POST['no_epsilon'])) {
 				}*/
 
 				for ($z=0; $z < count($new_char[$i]); $z++) { 
-					if($z == count($point_cell)-1){
+					if($z >= count($point_cell)-2){
 						continue;
 					}
 					/*print_r($new_char[$i]);
@@ -359,12 +373,97 @@ if (isset($_POST['no_epsilon'])) {
 		echo $row;
 	}
 	echo "</table></div>";
+	echo '<div class="clear"></div>';
 
 }
 
 
+if(isset($_POST['input_state']) && isset($_POST['nfa_rest'])){
+	$states = $_POST['input_state'];
+	$rest_nfa = $_POST['nfa_rest'];
 
-echo '<div class="clear"></div>';
+	$states_arr = explode(",", $states);
+	for ($i=0; $i < count($states_arr); $i++) { 
+		$headings[] = $states_arr[$i];
+	}
+
+	$other_rows = explode("\n", $rest_nfa);
+	//print_r($other_rows);
+	echo "<br>";
+	$rows_data = [];
+	for ($j=0; $j < count($other_rows); $j++) { 
+		$rows_data[$j] = "<tr>";
+		$single_cell = explode(",", $other_rows[$j]);
+		for ($k=0; $k < count($single_cell); $k++) { 
+			$cell_text = ($single_cell[$k] == '#')? "∅": $single_cell[$k];
+			$rows_data[$j] .= "<td>$cell_text</td>";
+			if ($k==0) {
+				$variable_cap[] = $single_cell[$k];
+			} else{
+				$variable_all[$j][] = $single_cell[$k];
+			}
+			
+		}
+
+		$rows_data[$j] .= "</tr>";
+
+	}
+	//print_r($variable_cap);echo "<br>";
+	//print_r($headings);echo "<br>";
+		$our_ex = 0;
+		foreach ($variable_all as $key => $value) {
+			//print_r($value);echo "<br>";
+			for ($l=0; $l < count($headings); $l++) { 
+				$seperator = "";
+				if ($value[$l] != "#") {
+
+					if (!empty($our_values[$our_ex])) {
+						if ($l > 0) {
+							$seperator = "|";
+						} else {
+							$seperator = "";
+						}
+						$our_values[$our_ex] .= $seperator.$headings[$l].$value[$l];
+					} else{
+						$our_values[$our_ex] = $seperator.$headings[$l].$value[$l];
+					}
+				}
+			}
+			$our_ex++;
+		}
+
+
+	//echo "<br>";echo "<br>";echo "<br>";
+	//print_r($our_values);echo "<br>";
+	
+	
+		
+	echo "<div class='table_nfa_epsilon'><label for=''>Transition Table</label><table class='table'><thead>";
+
+
+
+	// Start of table header
+	echo "<tr id='epsilon_nfa_head'><th></th>";
+	foreach ($headings as $heading) {
+		$t_heading = ($heading == '~')? "ε": $heading;
+		echo "<th>".$t_heading."</th>";
+	}
+	echo "</tr></thead>";
+	// End of table header
+	foreach ($rows_data as $row) {
+		echo $row;
+	}
+	echo "</table></div>";
+	//echo '<div class="clear">';
+	echo '<div class="table_nfa_epsilon"><form><label>Regualr Grammer</label><br><textarea class="rg_input" cols="30" rows="6" readonly="true">';
+	for ($m=0; $m < count($variable_cap); $m++) { 
+		echo $variable_cap[$m]."→".str_replace("~", "&epsilon;", $our_values[$m])."\n";
+	}
+	echo '</textarea></form></div><br><div class="clear"></div>';
+
+
+}
+
 
 /*
 foreach (str_split($with_or[$x]) as $val_set) {

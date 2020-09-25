@@ -15,7 +15,11 @@
 .tabContainer .buttonContainer{
     height: 15%;
 }
-
+form input[type=text] {
+    width: 300px;
+    font-size: 14px;
+    height: 30px;
+}
 .arrow{
     font-size: 25px;
     font-weight: bold;
@@ -36,6 +40,16 @@
     border-radius: 15px 15px 0 0;
     border: 2px solid #9fb8cd;
     border-bottom: none;
+}
+.single_image img {
+    width: 220px;
+    height: 160px;
+}
+.single_image {
+    display: inline-block;
+    width: 230px;
+    margin: auto;
+    text-align: center;
 }
 .tabContainer .buttonContainer button:hover{
     background-color: #d7d4d4;
