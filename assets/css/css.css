@@ -1,0 +1,124 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.title{
+    font-family: sans-serif;
+    color: #000;
+    text-align: center;
+} 
+.tabContainer{
+    width: 100%;
+    height: 350px;
+    
+}
+.tabContainer .buttonContainer{
+    height: 15%;
+}
+
+.arrow{
+    font-size: 25px;
+    font-weight: bold;
+}
+.tabContainer .buttonContainer button{
+    width: 25%;
+    height: 100%;
+    float: left;
+    border: none;
+    outline:none;
+    cursor: pointer;
+    padding: 10px;
+    font-family: sans-serif;
+    font-size: 18px;
+    background-color: #bfbfbf;
+    color: #828282;
+    font-weight: bold;
+    border-radius: 15px 15px 0 0;
+    border: 2px solid #9fb8cd;
+    border-bottom: none;
+}
+.tabContainer .buttonContainer button:hover{
+    background-color: #d7d4d4;
+}
+.tabContainer .tabPanel{
+    min-height: 200px;
+    background-color: gray;
+    color: #000;
+    padding: 20px 20px;
+    box-sizing: border-box;
+    font-family: sans-serif;
+    display: none;
+    border:2px solid #e2e2e2;
+    border-top:none;
+}
+
+#error{
+    color: red;
+}
+
+#success{
+    color: green;
+}
+
+form textarea{
+    resize: none;
+    width: 300px;
+    font-size: 16px;
+    height: 150px;
+}
+
+.button{
+    background: #1382ad;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 400;
+    cursor: pointer;
+}
+
+
+.table {
+  border-collapse: collapse;
+  
+}
+label{
+    font-weight: bold;
+}
+
+.table th, td {
+  text-align: left;
+  padding: 8px;
+  background:#f5f5f5;
+  border:1px  solid #9f9f9f;
+  text-align: right;
+}
+
+.table tr td:nth-child(1){background-color: #7a7a7a; color:#fff; font-weight:bold;}
+
+.table th {
+  background-color: #7a7a7a;
+  color: white;
+}
+
+.clear{
+    clear: both;
+}
+
+.table_nfa_epsilon{
+    max-width: 400px;
+    float: left;
+    margin: 10px;
+}
+
+.nfa_diagram{
+    border: 2px solid #b3c6d7;
+    max-width: 600px;
+
+}
+
+.nfa_diagram #draw_nfa{
+    margin: 20px;
+    margin-right: none;
+}
