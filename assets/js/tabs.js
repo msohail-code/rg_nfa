@@ -15,4 +15,4 @@ function showPanel(panelIndex,colorCode) {
     // tabPanels[panelIndex].style.color="black";
     tabPanels[panelIndex].style.backgroundColor=colorCode;
 }
-showPanel(1,'#fff');
+showPanel(0,'#fff');
